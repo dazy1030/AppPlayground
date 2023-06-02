@@ -7,6 +7,6 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-        - name: Echo Run ID
-          run: echo '${{ github.run_id }}'
+        - name: Echo Build number
+          run: echo '${{ vars.BUILD_NUMBER }}'
   
