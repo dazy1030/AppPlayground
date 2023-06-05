@@ -8,5 +8,5 @@ jobs:
     
     steps:
         - name: Echo Build number
-          run: echo '${{ vars.BUILD_NUMBER }}'
+          run: echo '${{ github }}'
   
