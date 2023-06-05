@@ -8,5 +8,5 @@ jobs:
     
     steps:
         - name: Echo Build number
-          run: echo '${{ github }}'
+          run: echo '${{ toJSON(github) }}'
   
