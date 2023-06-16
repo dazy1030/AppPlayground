@@ -7,7 +7,16 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Dump GitHub context
-        id: github_context_step
-        run: echo '${{ toJSON(github.event) }}'
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          # コミット履歴をどこまで遡って参照できるかの設定
+          # デフォルトでは 1 に設定されており、最新のコミット履歴しか参照できない
+          # 0 に変更することで、リポジトリの完全なコミット履歴を参照できるようになる
+          # ただし、コミット履歴が大きくなるとクローンに時間がかかるため、ボトルネックになる場合は適切な値を設定する
+          fetch-depth: 0
+      - name: Display commit log
+        # コミットID..コミットID とすることで、表示するコミット履歴の範囲を指定することができる
+        # --format="%s %H" と指定することで、コミットメッセージとコミットIDをワンライナーで表示できる
+        run: git log ${{ github.event.before }}..${{ github.sha }} --format="%s %H"
   
