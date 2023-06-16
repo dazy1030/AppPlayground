@@ -14,5 +14,5 @@ jobs:
       - name: Display commit log
         run: |
           LAST_COMMIT_MESSAGE=`git log -1 --pretty='%s'`
-          echo "$LAST_COMMIT_MESSAGE"
+          echo $LAST_COMMIT_MESSAGE
   
