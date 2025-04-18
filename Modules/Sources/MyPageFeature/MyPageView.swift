@@ -15,7 +15,7 @@ public struct MyPage {
     }
     
     public enum Action {
-        
+        case logoutButtonPressed
     }
     
     public init() {}
@@ -35,8 +35,13 @@ public struct MyPageView: View {
     }
     
     public var body: some View {
-        Text("MyPage")
-            .navigationTitle("MyPage")
+        VStack {
+            Text("MyPage")
+            Button("Logout") {
+                store.send(.logoutButtonPressed)
+            }
+        }
+        .navigationTitle("MyPage")
     }
 }
 
