@@ -12,66 +12,49 @@ import SwiftUI
 
 @Reducer
 public struct AppReducer {
-    @ObservableState
-    public struct State: Equatable {
-        var home: Home.State
-        var myPage: MyPage.State
-        var tabSelection: Int
+    @Reducer
+    public enum Destination {
+        case rootTab(RootTab)
     }
     
-    public enum Action: BindableAction {
-        case home(Home.Action)
-        case myPage(MyPage.Action)
-        case binding(BindingAction<State>)
+    @ObservableState
+    public struct State: Equatable {
+        var destination: Destination.State
+    }
+    
+    public enum Action {
+        case destination(Destination.Action)
     }
     
     public init() {}
     
     public var body: some ReducerOf<Self> {
-        Scope(state: \.home, action: \.home) {
-            Home()
+        Scope(state: \.destination, action: \.destination) {
+            Destination.body
         }
-        Scope(state: \.myPage, action: \.myPage) {
-            MyPage()
-        }
-        BindingReducer()
     }
 }
 
+extension AppReducer.Destination.State: Equatable {}
+
 extension AppReducer.State {
     public static var initial: Self {
-        .init(home: .initial, myPage: .initial, tabSelection: 0)
+        .init(destination: .rootTab(.initial))
     }
 }
 
 public struct AppView: View {
-    @Bindable var store: StoreOf<AppReducer>
+    var store: StoreOf<AppReducer>
     
     public init(store: StoreOf<AppReducer>) {
         self.store = store
     }
     
     public var body: some View {
-        TabView(selection: $store.tabSelection) {
-            NavigationStack {
-                HomeView(store: store.scope(state: \.home, action: \.home))
-            }
-            .tabItem {
-                let imageName = store.tabSelection == 0 ? "house.fill" : "house"
-                Image(systemName: imageName)
-            }
-            .tag(0)
-            
-            NavigationStack {
-                MyPageView(store: store.scope(state: \.myPage, action: \.myPage))
-            }
-            .tabItem {
-                let imageName = store.tabSelection == 1 ? "person.fill" : "person"
-                Image(systemName: imageName)
-            }
-            .tag(1)
+        switch store.scope(state: \.destination, action: \.destination).case {
+        case let .rootTab(rootTabStore):
+            RootTabView(store: rootTabStore)
         }
-        .tabViewStyle(.automatic)
     }
 }
 
