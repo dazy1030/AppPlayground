@@ -35,7 +35,7 @@ public struct MyPageView: View {
     }
     
     public var body: some View {
-        Text("Home")
+        Text("MyPage")
             .navigationTitle("MyPage")
     }
 }
