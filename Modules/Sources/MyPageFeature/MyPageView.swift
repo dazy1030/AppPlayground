@@ -5,11 +5,34 @@
 //  Created by 小田島 直樹 on 4/18/25.
 //
 
-
+import ComposableArchitecture
 import SwiftUI
 
-public struct MyPageView: View {
+@Reducer
+public struct MyPage {
+    public struct State: Equatable {
+        
+    }
+    
+    public enum Action {
+        
+    }
+    
     public init() {}
+}
+
+public extension MyPage.State {
+    static var initial: Self {
+        .init()
+    }
+}
+
+public struct MyPageView: View {
+    var store: StoreOf<MyPage>
+    
+    public init(store: StoreOf<MyPage>) {
+        self.store = store
+    }
     
     public var body: some View {
         Text("Home")
@@ -18,5 +41,8 @@ public struct MyPageView: View {
 }
 
 #Preview {
-    MyPageView()
+    let store = StoreOf<MyPage>(initialState: MyPage.State()) {
+        MyPage()
+    }
+    MyPageView(store: store)
 }

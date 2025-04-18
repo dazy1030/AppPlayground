@@ -6,13 +6,17 @@
 //
 
 import AppFeature
+import ComposableArchitecture
 import SwiftUI
 
 @main
 struct AppPlaygroundApp: App {
     var body: some Scene {
         WindowGroup {
-            AppView()
+            let store = StoreOf<AppReducer>(initialState: AppReducer.State.initial) {
+                AppReducer()
+            }
+            AppView(store: store)
         }
     }
 }
