@@ -15,6 +15,7 @@ public struct MyPage {
     }
     
     public enum Action {
+        case onAppear
         case logoutButtonPressed
     }
     
@@ -42,6 +43,9 @@ public struct MyPageView: View {
             }
         }
         .navigationTitle("MyPage")
+        .onAppear {
+            store.send(.onAppear)
+        }
     }
 }
 

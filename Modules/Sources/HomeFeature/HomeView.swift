@@ -15,7 +15,7 @@ public struct Home {
     }
     
     public enum Action {
-        
+        case onAppear
     }
     
     public init() {}
@@ -37,6 +37,9 @@ public struct HomeView: View {
     public var body: some View {
         Text("Home")
             .navigationTitle("Home")
+            .onAppear {
+                store.send(.onAppear)
+            }
     }
 }
 
