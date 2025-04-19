@@ -30,6 +30,9 @@ public struct AppReducer {
     public init() {}
     
     public var body: some ReducerOf<Self> {
+        Scope(state: \.destination, action: \.destination) {
+            Destination.body
+        }
         Reduce<State, Action> { state, action in
             switch action {
             case .destination(.login(.loginButtonPressed)):
@@ -43,9 +46,6 @@ public struct AppReducer {
             default:
                 return .none
             }
-        }
-        Scope(state: \.destination, action: \.destination) {
-            Destination.body
         }
     }
 }
