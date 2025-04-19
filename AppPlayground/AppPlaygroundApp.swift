@@ -13,10 +13,7 @@ import SwiftUI
 struct AppPlaygroundApp: App {
     var body: some Scene {
         WindowGroup {
-            let store = StoreOf<AppReducer>(initialState: AppReducer.State.initial) {
-                AppReducer()
-            }
-            AppView(store: store)
+            HogeView()
         }
     }
 }
